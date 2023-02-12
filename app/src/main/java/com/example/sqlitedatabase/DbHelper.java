@@ -23,12 +23,12 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String STUDENT_TABLE = "StudentTable";
 
     public DbHelper(@Nullable Context context) {
+
         super(context, "studentDB.db", null, 4);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db)
-    {
+    public void onCreate(SQLiteDatabase db) {
         //String createTableSTatementOne = "CREATE TABLE CustTable(STUDENTID Integer PRIMARY KEY AUTOINCREMENT, " + STUDENT_NAME_FIRST + " Text, STUDENTAge Int, ActiveSTUDENT BOOL) ";
         String createTableSTatement = "CREATE TABLE " + STUDENT_TABLE + "(" + STUDENT_ID +
                 " Integer PRIMARY KEY AUTOINCREMENT, " +
@@ -43,21 +43,15 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void  addStudent(StudentModel STUDENTModel){
+    public void addStudent(StudentModel STUDENTModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         //Hash map, as we did in bundles
         ContentValues cv = new ContentValues();
-
         cv.put(STUDENT_NAME, STUDENTModel.getName());
         cv.put(STUDENT_AGE, STUDENTModel.getAge());
         cv.put(ACTIVE_STUDENT, STUDENTModel.isActive());
         db.insert(STUDENT_TABLE, null, cv);
         db.close();
-
-        //NullCoumnHack
-        //long insert =
-        //if (insert == -1) { return false; }
-        //else{return true;}
     }
 
     public ArrayList<StudentModel> getAllStudents() {
@@ -82,4 +76,36 @@ public class DbHelper extends SQLiteOpenHelper {
         cursorCourses.close();
         return studentArrayList;
     }
+
+   /* public void updateStudent(StudentModel student) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(STUDENT_NAME, student.getName());
+        values.put(STUDENT_ID, student.getId());
+        values.put(ACTIVE_STUDENT, student.isActive());
+
+        db.update(STUDENT_TABLE, values, STUDENT_ID + " = ?", new String[]{student.getId().ToString()});
+        db.close();
+    }*/
+
+    public void deleteStudent(String rollNo)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(STUDENT_TABLE,STUDENT_ID + " = ?", new String[] {rollNo});
+        db.close();
+    }
+
+    /*public List<StudentModel> selectAllStudents()
+    {
+        List<StudentModel> students=new List<>();
+        String sql="Select * from "+STUDENT_TABLE;
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor cursor=db.rawQuery(sql,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                studentArrayList.add(new StudentModel(cursorCourses.))
+            }
+        }
+    }*/
 }

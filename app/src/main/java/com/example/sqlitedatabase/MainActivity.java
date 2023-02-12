@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    studentModel = new StudentModel(editName.getText().toString(), Integer.parseInt(editAge.getText().toString()), switchIsActive.isChecked());
+                    studentModel = new StudentModel(editName.getText().toString(),
+                            Integer.parseInt(editAge.getText().toString()), switchIsActive.isChecked());
                     Toast.makeText(MainActivity.this, studentModel.toString(), Toast.LENGTH_SHORT).show();
                 }
                 catch (Exception e){
@@ -54,9 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 List<StudentModel> list = dbHelper.getAllStudents();
                 ArrayAdapter arrayAdapter = new ArrayAdapter<StudentModel>(MainActivity.this, android.R.layout.simple_list_item_1,list);
                 listViewStudent.setAdapter(arrayAdapter);
-
-
-
             }
         });
 
